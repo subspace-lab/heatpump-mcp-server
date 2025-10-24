@@ -1,0 +1,65 @@
+[project]
+name = "heatpump-mcp-server"
+version = "0.1.0"
+description = "MCP server for residential heat pump sizing, cost estimation, and cold-climate performance verification"
+authors = [
+    {name = "Subspace Lab"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+keywords = ["mcp", "heat-pump", "hvac", "calculator", "sizing"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "fastmcp>=2.0.0",
+    "pydantic>=2.8.0",
+    "pydantic-settings>=2.0.0",
+    "httpx>=0.27.0",
+    "python-dotenv>=1.0.0",
+    "pgeocode>=0.4.0",
+    "pandas>=2.2.0",
+    "numpy>=1.24.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/subspace-lab/heatpump-mcp-server"
+Repository = "https://github.com/subspace-lab/heatpump-mcp-server"
+Issues = "https://github.com/subspace-lab/heatpump-mcp-server/issues"
+
+[project.scripts]
+heatpump-mcp-server = "heatpump_mcp_server.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/heatpump_mcp_server"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
