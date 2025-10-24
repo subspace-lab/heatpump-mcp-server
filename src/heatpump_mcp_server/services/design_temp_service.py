@@ -54,10 +54,8 @@ class DesignTempService:
     def _load_eeweather_stations(self):
         """Load weather stations from bundled JSON data."""
         try:
-            # Path: services -> heatpump_mcp_server -> src -> heatpump_mcp_server (package root) -> data
-            data_file = (
-                Path(__file__).parent.parent.parent.parent / "data" / "eeweather_stations.json"
-            )
+            # Path: services -> heatpump_mcp_server -> data
+            data_file = Path(__file__).parent.parent / "data" / "eeweather_stations.json"
 
             logger.info(f"Loading eeweather stations from: {data_file}")
 

@@ -19,8 +19,8 @@ class HeatPumpModelsService:
     def _load_models(self):
         """Load heat pump models from bundled JSON file."""
         try:
-            # Path: services -> heatpump_mcp_server -> src -> heatpump_mcp_server (package root) -> data
-            data_file = Path(__file__).parent.parent.parent.parent / "data" / "hpmodels.json"
+            # Path: services -> heatpump_mcp_server -> data
+            data_file = Path(__file__).parent.parent / "data" / "hpmodels.json"
 
             logger.info(f"Loading heat pump models from: {data_file}")
 
