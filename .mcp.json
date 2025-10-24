@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "heatpump-calculator": {
+      "command": "uvx",
+      "args": ["--from", ".", "heatpump-mcp-server"],
+      "env": {
+        "EIA_API_KEY": "",
+        "LOG_LEVEL": "INFO",
+        "ENABLE_LOCAL_CACHE": "true"
+      }
+    }
+  }
+}

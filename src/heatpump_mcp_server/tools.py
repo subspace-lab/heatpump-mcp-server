@@ -202,15 +202,25 @@ async def check_cold_climate_performance(
         - warnings: Critical issues or limitations
     """
     try:
+        from .models.cold_climate import ColdClimateInput, BackupHeatType
+
         logger.info(f"Cold climate check: {heat_pump_model}, ZIP {zip_code}, {square_feet} sqft")
 
-        result = cold_climate_service.analyze_cold_climate_performance(
+        # Convert string backup heat to enum if provided
+        backup_heat_enum = None
+        if existing_backup_heat:
+            backup_heat_enum = BackupHeatType(existing_backup_heat)
+
+        # Create Pydantic model instance
+        input_data = ColdClimateInput(
             zip_code=zip_code,
             square_feet=square_feet,
             build_year=build_year,
             heat_pump_model=heat_pump_model,
-            existing_backup_heat=existing_backup_heat,
+            existing_backup_heat=backup_heat_enum,
         )
+
+        result = cold_climate_service.analyze_cold_climate_performance(input_data)
 
         return result.model_dump()
     except Exception as e:

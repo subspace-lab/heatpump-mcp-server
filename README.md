@@ -6,15 +6,9 @@ A Model Context Protocol (MCP) server for residential heat pump sizing, cost est
 
 ## Quick Start
 
-### 1. Installation
+### 1. No Installation Needed!
 
-```bash
-# Run directly (once published to PyPI)
-uvx heatpump-mcp-server
-
-# Or install permanently
-uv pip install heatpump-mcp-server
-```
+The server runs directly via `uvx` - no installation required. Your MCP client will handle this automatically.
 
 ### 2. Configure Your MCP Client
 
@@ -30,7 +24,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
   "mcpServers": {
     "heatpump-calculator": {
       "command": "uvx",
-      "args": ["heatpump-mcp-server"]
+      "args": ["--refresh", "--from", "git+https://github.com/subspace-lab/heatpump-mcp-server.git", "heatpump-mcp-server"]
     }
   }
 }
@@ -49,7 +43,7 @@ Add to `.claude/mcp.json` in your workspace:
   "mcpServers": {
     "heatpump-calculator": {
       "command": "uvx",
-      "args": ["heatpump-mcp-server"]
+      "args": ["--refresh", "--from", "git+https://github.com/subspace-lab/heatpump-mcp-server.git", "heatpump-mcp-server"]
     }
   }
 }
@@ -68,7 +62,7 @@ Add to Cursor's MCP settings (Settings > MCP):
   "mcpServers": {
     "heatpump-calculator": {
       "command": "uvx",
-      "args": ["heatpump-mcp-server"]
+      "args": ["--refresh", "--from", "git+https://github.com/subspace-lab/heatpump-mcp-server.git", "heatpump-mcp-server"]
     }
   }
 }
@@ -87,20 +81,7 @@ Any MCP-compatible client can use:
   "mcpServers": {
     "heatpump-calculator": {
       "command": "uvx",
-      "args": ["heatpump-mcp-server"]
-    }
-  }
-}
-```
-
-Or if installed locally:
-
-```json
-{
-  "mcpServers": {
-    "heatpump-calculator": {
-      "command": "uv",
-      "args": ["run", "heatpump-mcp-server"]
+      "args": ["--refresh", "--from", "git+https://github.com/subspace-lab/heatpump-mcp-server.git", "heatpump-mcp-server"]
     }
   }
 }
@@ -194,7 +175,7 @@ For more accurate electricity rates, you can optionally provide an EIA API key:
   "mcpServers": {
     "heatpump-calculator": {
       "command": "uvx",
-      "args": ["heatpump-mcp-server"],
+      "args": ["--refresh", "--from", "git+https://github.com/subspace-lab/heatpump-mcp-server.git", "heatpump-mcp-server"],
       "env": {
         "EIA_API_KEY": "your_eia_api_key_here"
       }
@@ -214,13 +195,33 @@ EIA_API_KEY=your_eia_api_key_here
 
 ## Installation from Source
 
-For development or customization:
+### For Development or Customization
 
 ```bash
 git clone https://github.com/subspace-lab/heatpump-mcp-server.git
 cd heatpump-mcp-server
 uv pip install -e .
 ```
+
+### For Local Installation (Advanced)
+
+If you prefer to install the package locally instead of using `uvx`:
+
+```bash
+# Install from GitHub
+uv pip install git+https://github.com/subspace-lab/heatpump-mcp-server.git
+
+# Then configure your MCP client to use the local installation:
+{
+  "mcpServers": {
+    "heatpump-calculator": {
+      "command": "heatpump-mcp-server"
+    }
+  }
+}
+```
+
+Note: Using `uvx` with `--refresh` is recommended for most users as it automatically updates to the latest version.
 
 ## Architecture
 

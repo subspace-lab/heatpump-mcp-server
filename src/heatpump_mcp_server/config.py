@@ -17,8 +17,8 @@ class Settings(BaseSettings):
     eia_api_key: Optional[str] = None
     nrel_api_key: Optional[str] = None
 
-    # Data paths
-    data_dir: Path = Path(__file__).parent.parent.parent.parent / "data"
+    # Data paths (bundled with package in src/heatpump_mcp_server/data/)
+    data_dir: Path = Path(__file__).parent / "data"
 
     # Caching (local file system)
     enable_local_cache: bool = True
