@@ -98,14 +98,19 @@ async def calculate_multi_zone_sizing(
         - recommendations: Installation and design recommendations
     """
     try:
+        from .models.multi_zone import Zone
+
         logger.info(
             f"Multi-zone calculation: {len(zones)} zones, ZIP {zip_code}, built {build_year}"
         )
 
+        # Convert dict zones to Zone objects
+        zone_objects = [Zone(**zone_dict) for zone_dict in zones]
+
         result = multi_zone_service.calculate_multi_zone(
+            zones=zone_objects,
             zip_code=zip_code,
             build_year=build_year,
-            zones=zones,
         )
 
         return result.model_dump()
@@ -151,9 +156,12 @@ async def estimate_energy_costs(
         - calculation_notes: Important assumptions and notes
     """
     try:
+        from .models.bill_estimator import BillEstimatorInput
+
         logger.info(f"Cost estimation: {heat_pump_model}, ZIP {zip_code}, {square_feet} sqft")
 
-        result = await bill_estimator_service.calculate_costs(
+        # Create Pydantic model instance
+        input_data = BillEstimatorInput(
             zip_code=zip_code,
             square_feet=square_feet,
             build_year=build_year,
@@ -162,6 +170,8 @@ async def estimate_energy_costs(
             electricity_rate_override=electricity_rate_override,
             current_heating_fuel=current_heating_fuel,
         )
+
+        result = await bill_estimator_service.calculate_costs(input_data)
 
         return result.model_dump()
     except Exception as e:
